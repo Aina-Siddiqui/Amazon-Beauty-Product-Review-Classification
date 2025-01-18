@@ -1,0 +1,16 @@
+transformers
+transformers[sentencepiece]
+datasets
+numpy
+pandas
+torch
+nltk
+notebook
+tqdm
+fastapi
+uvicorn
+Jinja2
+ensure
+python-box
+pyYAML
+-e .
