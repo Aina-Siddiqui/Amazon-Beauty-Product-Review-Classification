@@ -1,6 +1,6 @@
 from bpReviewClassifier.constants import *
 from bpReviewClassifier.utils.common import read_yaml,create_directories
-from bpReviewClassifier.entity import DataIngestionConfig
+from bpReviewClassifier.entity import DataIngestionConfig,DataTransformationConfig
 
 class ConfigurationManager:
     def __init__(self, config_filepath=CONFIG_FILE_PATH, params_filepath=PARAMS_FILE_PATH):
@@ -17,4 +17,12 @@ class ConfigurationManager:
             unzip_dir=config.unzip_dir
         )
         return data_ingestion_config
- 
+    def get_data_transformation(self)->DataTransformationConfig:
+        config=self.config.data_transformation
+        create_directories([config.root_dir])
+        data_transformation_config=DataTransformationConfig(
+            root_dir=config.root_dir,
+            input_data_file=config.input_data_file,
+            tokenizer_name=config.tokenizer_filename
+        )
+        return data_transformation_config

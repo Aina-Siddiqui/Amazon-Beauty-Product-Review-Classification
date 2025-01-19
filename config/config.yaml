@@ -3,4 +3,8 @@ data_ingestion:
   root_dir: artifacts/data_ingestion
   source_URL: 'https://github.com/Aina-Siddiqui/DataSets/raw/refs/heads/main/All_Beauty.jsonl.gz'
   local_data_file: artifacts/data_ingestion/data.zip
-  unzip_dir: artifacts/data_ingestion 
+  unzip_dir: artifacts/data_ingestion
+data_transformation:
+  root_dir: artifacts/data_transformation
+  input_data_file: artifacts/data_ingestion/BeautyProducts.jsonl
+  tokenizer_filename: 'distilbert/distilbert-base-uncased'
