@@ -17,10 +17,10 @@ class DataTransformation:
         #dropping unnecessary columns
         df.drop(['title','images','asin','parent_asin','user_id','timestamp', 'helpful_vote', 'verified_purchase'],axis=1,inplace=True)
         #one hot encoding our output column that is rating
-        rating_encoded=ohe.fit_transform(df[['rating']]).toarray()
-        df['rating']=list(rating_encoded)
+        # Example fix for dataset labels
+        df['rating'] = df['rating']-1
         #splitting dataset into train,test,validation
-        train_df,temp_df=train_test_split(df,test_size=0.3,random_state=42)
+        train_df,temp_df=train_test_split(df,test_size=0.1,random_state=42)
         test_df,val_df=train_test_split(temp_df,test_size=0.5,random_state=42)
         train_df.reset_index(drop=True, inplace=True)
         val_df.reset_index(drop=True, inplace=True)
@@ -37,12 +37,13 @@ class DataTransformation:
             })
         return dataset_dict
     def tokenize_fun(self,example_batch):
-        encodings=self.tokenizer(example_batch['text'], truncation=True, padding=True)
+        encodings=self.tokenizer(example_batch['text'], truncation=True, padding='max_length')
         return encodings
     def convert(self):
         prepared_dataset=self.preparing_dataset()
         transformed=prepared_dataset.map(self.tokenize_fun,batched=True)
         transformed=transformed.remove_columns(['text'])
+        transformed=transformed.rename_column('rating','label')
         transformed.save_to_disk(os.path.join(self.config.root_dir,"transformed_dataset"))
     
     
