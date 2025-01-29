@@ -1,6 +1,6 @@
 from bpReviewClassifier.constants import *
 from bpReviewClassifier.utils.common import read_yaml,create_directories
-from bpReviewClassifier.entity import DataIngestionConfig,DataTransformationConfig,ModelConfig
+from bpReviewClassifier.entity import DataIngestionConfig,DataTransformationConfig,ModelConfig,ModelEvaluationConfig
 
 class ConfigurationManager:
     def __init__(self, config_filepath=CONFIG_FILE_PATH, params_filepath=PARAMS_FILE_PATH):
@@ -45,3 +45,14 @@ class ConfigurationManager:
         gradient_accumulation_steps=params.gradient_accumulation_steps
         )
         return model_trainer_config
+    def get_model_eval_config(self)->ModelEvaluationConfig:
+        config=self.config.model_evaluation
+        create_directories([config.root_dir])
+        model_eval_config=ModelEvaluationConfig(
+            root_dir=config.root_dir,
+            model_path=config.model_path,
+            data_path=Path(config.data_path),
+            tokenizer_path=config.tokenizer_path,
+            metric_filename=config.metric_filename,
+        )
+        return model_eval_config

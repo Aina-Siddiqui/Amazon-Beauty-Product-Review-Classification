@@ -29,3 +29,11 @@ class ModelConfig:
     eval_steps: int
     save_steps: int
     gradient_accumulation_steps: int
+
+@dataclass(frozen=True)
+class ModelEvaluationConfig:
+    root_dir: Path
+    model_path: Path
+    data_path: Path
+    tokenizer_path: Path
+    metric_filename:Path
