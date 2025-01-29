@@ -12,4 +12,9 @@ model_trainer :
   root_dir: artifacts/model_training
   data_path: artifacts\data_transformation\transformed_dataset
   model_ckpt: 'distilbert/distilbert-base-uncased'
-  
+model_evaluation:
+  root_dir: artifacts/model_evaluation
+  model_path: artifacts/model_training/review-Classifier-model
+  data_path: artifacts/data_ingestion/BeautyProducts.jsonl
+  tokenizer_path: artifacts/model_training/tokenizer
+  metric_filename: artifacts/model_evaluation/metric.csv
